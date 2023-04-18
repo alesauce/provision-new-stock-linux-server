@@ -1,0 +1,15 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: debian
+    image: python:3.11.3-bullseye
+    pre_build_image: true
+    groups:
+      - interpreter
+provisioner:
+  name: ansible
+verifier:
+  name: ansible

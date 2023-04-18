@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include alesauce.provision_stock_ubuntu_server"
+      include_role:
+        name: "alesauce.provision_stock_ubuntu_server"
