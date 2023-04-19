@@ -1,5 +1,33 @@
 ---
-# tasks file for provision_stock_ubuntu_server
-- name: Molecule Hello World!
-  ansible.builtin.debug:
-    msg: Hello, World!
+- name: Create specified user
+  ansible.builtin.user:
+    name: '{{ new_user_name }}'
+    append: true
+    groups: '{{ item }}'
+    state: present
+    shell: /bin/bash
+  with_items: '{{ user_groups }}'
+- name: Add SSH public key to new user
+  ansible.posix.authorized_key:
+    user: '{{ new_user_name }}'
+    state: present
+    key: "{{ lookup('file', ssh_public_key_file) }}"
+- name: Allow users in sudo group to use sudo passwordless
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: '^%sudo'
+    line: '%sudo ALL=(ALL) NOPASSWD:ALL'
+    validate: 'visudo -cf %s'
+  when: can_sudo_passwordless
+- name: Upload new SSH daemon config file
+  ansible.builtin.template:
+    src: sshd_config.j2
+    dest: "/etc/ssh/sshd_config"
+    owner: root
+    group: root
+    mode: '0640'
+    validate: /usr/sbin/sshd -t -f %s
+    backup: yes
+  when: upload_new_sshd_config
+  notify: restart ssh

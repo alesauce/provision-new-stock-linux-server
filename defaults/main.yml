@@ -1,2 +1,16 @@
 ---
-# defaults file for provision_stock_ubuntu_server
+new_user_name: 'new_user'
+
+user_groups:
+  - sudo
+  - video
+
+ssh_public_key_file: 'authorized_keys'
+
+can_sudo_passwordless: true
+
+change_ssh_port: false
+
+new_ssh_port: 1337
+
+upload_new_sshd_config: true

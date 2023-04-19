@@ -1,2 +1,5 @@
 ---
-# handlers file for provision_stock_ubuntu_server
+- name: restart sshd
+  ansible.builtin.service:
+    name: ssh
+    state: restarted

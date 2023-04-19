@@ -5,10 +5,8 @@ driver:
   name: docker
 platforms:
   - name: debian
-    image: python:3.11.3-bullseye
+    image: 'alesauce/debian-ansible-testing-frankenstein:latest'
     pre_build_image: true
-    groups:
-      - interpreter
 provisioner:
   name: ansible
 verifier:
