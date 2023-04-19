@@ -31,3 +31,7 @@
     backup: yes
   when: upload_new_sshd_config
   notify: restart ssh
+- name: Modify hostname to whatever the ansible hostname is in the inventory (if desired)
+  ansible.builtin.hostname:
+    name: '{{ inventory_hostname }}'
+  when: create_new_hostnames

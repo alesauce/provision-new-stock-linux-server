@@ -14,3 +14,5 @@ change_ssh_port: false
 new_ssh_port: 1337
 
 upload_new_sshd_config: true
+
+create_new_hostnames: true
